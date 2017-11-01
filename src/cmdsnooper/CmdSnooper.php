@@ -12,10 +12,15 @@ class CmdSnooper extends PluginBase {
 	public $snoopers = [];
 	
 	public function onEnable() {
+                if($this->getConfig()->get("enable") == false) {
+                   $this->setEnabled(false);
+                   return;
+                }
 		@mkdir($this->getDataFolder());
 		$this->getLogger()->info("Enabled! Ready to snoop >:D");
 		$this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
 		$this->cfg = new Config($this->getDataFolder() . "config.yml", Config::YAML, array(
+                "enable" => "true",
 	  	"Console.Logger" => "true",
                 "Console.HideTell" => "true",
                 "Game.HideTell" => "false"
